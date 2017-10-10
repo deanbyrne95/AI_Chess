@@ -131,7 +131,31 @@ public class Chess extends JFrame implements MouseListener, MouseMotionListener
 
 	public void mousePressed(MouseEvent e)
 	{
+        //Only accent a left mouse click
+        if(!SwingUtilities.isLeftMouseButton(e))
+        {
+            return;
+        }
+        else
+        {
+            chessPiece = null;
+            Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
+            if (c instanceof JPanel)
+                return;
 
+            Point parentLocation = c.getParent().getLocation();
+            adjustmentX = parentLocation.x - e.getX();
+            adjustmentY = parentLocation.y - e.getY();
+            chessPiece = (JLabel)c;
+            initialX = e.getX();
+            initialY = e.getY();
+            startX = (e.getX()/75);
+            startY = (e.getY()/75);
+            chessPiece.setLocation(e.getX() + adjustmentX, e.getY() + adjustmentY);
+            chessPiece.setSize(chessPiece.getWidth(), chessPiece.getHeight());
+            layeredPane.add(chessPiece, JLayeredPane.DRAG_LAYER);
+
+        }
 	}
 
 	public void mouseDragged(MouseEvent me)
