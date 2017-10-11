@@ -98,7 +98,7 @@ In this version, the game is up to date with the second objective - allowing pla
 */
 //Suppress Warnings
 @SuppressWarnings("unchecked")
-public class ChessProject extends JFrame implements MouseListener, MouseMotionListener
+public class Chess extends JFrame implements MouseListener, MouseMotionListener
 {
     //Local Variables
     JLayeredPane layeredPane;
@@ -132,7 +132,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
     ----------------------------------------------------
     ====================================================
     */
-    public ChessProject()
+    public Chess()
     {
         Dimension boardSize = new Dimension(600, 600);
 
@@ -2771,8 +2771,8 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
 
     public static void main(String[] args)
     {
-        ChessProject frame = new ChessProject();
-        frame.setTitle("ChessProject - x12337831");
+        Chess frame = new Chess();
+        frame.setTitle("https://github.com/deanbyrne95/AI_Chess");
         ImageIcon img = new ImageIcon("BlackQueen.png");
         frame.setIconImage(img.getImage());
         frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
