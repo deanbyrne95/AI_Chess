@@ -289,6 +289,45 @@ public class Chess extends JFrame implements MouseListener, MouseMotionListener
         }
     }
 
+    //Method to colour a number of squares
+    private void colourSquares(Stack squares)
+    {
+        Border greenBorder = BorderFactory.createLineBorder(Color.GREEN, 3);
+        while(!squares.empty())
+        {
+            Square s = (Square)squares.pop();
+            int location = s.getXCoOrdinate() + ((s.getYCoOrdinate())*8);
+            JPanel panel = (JPanel)chessBoard.getComponent(location);
+            panel.setBorder(greenBorder);
+        }
+    }
+
+    //Method to colour a number of squares
+    private void resetBorders()
+    {
+        Border empty = BorderFactory.createEmptyBorder();
+        for(int i = 0; i < 64; i++)
+        {
+            JPanel tmp_panel = (JPanel)chessBoard.getComponent(i);
+            tmp_panel.setBorder(empty);
+        }
+    }
+
+    //Method to colour a number of squares
+    private void getLandingSquares(Stack square)
+    {
+        Move temp;
+        Square landingSquare;
+        Stack squares = new Stack();
+        while(!(square.empty()))
+        {
+            temp = (Move)square.pop();
+            landingSquare = (Square)temp.getLanding();
+            squares.push(landingSquare);
+        }
+        colourSquares(squares);
+    }
+
     public void mousePressed(MouseEvent e)
     {
         //Only accent a left mouse click
