@@ -1,4 +1,4 @@
-public class Move
+class Move
 {
     private Square start, landing;
 
