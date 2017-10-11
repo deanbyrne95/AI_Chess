@@ -1,16 +1,24 @@
 /*	 Dean Byrne 	*/
 /*		x12337831		*/
 
+//Java Imports
+
+import java.util.*;
+
 /*
-Move - Table of Contents
+AI - Table of Contents
 ====================================================
 ----------------------------------------------------
 
-1.	Move Class
-    1.1.	Class Constructor(s)
-    1.2.	Move Methods
-        1.2.1.	Get Start
-        1.2.2.	Get Landing
+1.	AI Class
+    1.1.	Class Constructor
+    1.2.    Class Methods
+        1.2.1.  Random Move
+        1.2.2.  Next Best Move*
+        1.2.3.  Two Levels Deep Move*
+
+
+* Work In Progress (Non-Functional)
 
 ----------------------------------------------------
 ====================================================
@@ -32,42 +40,34 @@ In this version, the game is up to date with the second objective - allowing pla
 ====================================================
 ----------------------------------------------------
 
-1.	Move Class
+1.	AI Class
 
 ----------------------------------------------------
 ====================================================
 */
-
-class Move
+public class AI
 {
-    Square start;
-    Square landing;
+    Random rand;
 
     /*
     ====================================================
     ----------------------------------------------------
 
-    1.1.	Class Constructor(s)
+    1.1.	AI Constructor(s)
 
     ----------------------------------------------------
     ====================================================
     */
-    public Move(Square x, Square y)
+    public AI()
     {
-        start = x;
-        landing = y;
-    }
-
-    public Move()
-    {
-
+        rand = new Random();
     }
 
     /*
     ====================================================
     ----------------------------------------------------
 
-    1.2.	Move Methods
+    1.2.	AI Methods
 
     ----------------------------------------------------
     ====================================================
@@ -77,27 +77,66 @@ class Move
     ====================================================
     ----------------------------------------------------
 
-    1.2.1.	Get Start
+    1.2.1.	Random Move
 
     ----------------------------------------------------
     ====================================================
     */
-    public Square getStart()
+    public Move randomMove(Stack possibilities)
     {
-        return start;
+        int moveID = rand.nextInt(possibilities.size());
+        System.out.println("AI randomly chose next move: " + moveID);
+        for (int i = 1; i < (possibilities.size() - moveID); i++)
+        {
+            possibilities.pop();
+        }
+        Move selectedMove = (Move) possibilities.pop();
+        return selectedMove;
     }
 
     /*
     ====================================================
     ----------------------------------------------------
 
-    1.2.2.	Get Landing
+    1.2.2.	Next Best Move*
 
     ----------------------------------------------------
     ====================================================
     */
-    public Square getLanding()
+    public Move nextBestMove(Stack possibilities)
     {
-        return landing;
+        Move selectedMove = (Move) possibilities.pop();
+        /*
+            For this we need to come up with a solution where, when
+            the pieces are being moved, they're being smarter rather than
+            randomly generated, i.e. when a piece is able to be taken
+
+            For this, we need to find all the pieces on the board
+            (their location and names) so the AI can juggle through which ones
+            are closer and/or worth the taking.
+
+            It will be similar to the Two-Levels-Deep AI, as it'll only go one
+            level deep, to simulate moves and their potential risks/benefits.
+        */
+
+
+        return selectedMove;
+    }
+
+    /*
+    ====================================================
+    ----------------------------------------------------
+
+    1.2.3.	Two Levels Deep Move*
+
+    ----------------------------------------------------
+    ====================================================
+    */
+    public Move twoLevelsDeepMove(Stack possibilities)
+    {
+        Move selectedMove = (Move) possibilities.pop();
+
+
+        return selectedMove;
     }
 }
