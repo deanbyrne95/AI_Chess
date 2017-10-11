@@ -1,16 +1,11 @@
 public class Move
 {
-    Square start, landing;
+    private Square start, landing;
 
-    public Move(Square x, Square y)
+    Move(Square x, Square y)
     {
         start = x;
         landing = y;
-    }
-
-    public Move()
-    {
-
     }
 
     Square getStart()
