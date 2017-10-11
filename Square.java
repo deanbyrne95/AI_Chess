@@ -1,8 +1,8 @@
 class Square
 {
-    public int xCoOrdinate;
-    public int yCoOrdinate;
-    public String pieceName;
+    private int xCoOrdinate;
+    private int yCoOrdinate;
+    private String pieceName;
 
     public Square(int x, int y)
     {
@@ -18,17 +18,17 @@ class Square
         pieceName = name;
     }
 
-    public int getXCoOrdinate()
+    int getXCoOrdinate()
     {
         return xCoOrdinate;
     }
 
-    public int getYCoOrdinate()
+    int getYCoOrdinate()
     {
         return yCoOrdinate;
     }
 
-    public String getPieceName()
+    String getPieceName()
     {
         return pieceName;
     }
