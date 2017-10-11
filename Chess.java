@@ -5,20 +5,14 @@
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
 import java.util.Stack;
 import javax.swing.*;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.EtchedBorder;
 import javax.swing.ImageIcon;
-import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 
 /*
 ChessProject - Table of Contents
@@ -170,62 +164,62 @@ public class Chess extends JFrame implements MouseListener, MouseMotionListener
         //Add pieces to Chess Board
         for (int i = 8; i < 16; i++)
         {
-            pieces = new JLabel(new ImageIcon("WhitePawn.png"));
+            pieces = new JLabel(new ImageIcon("pieces/WhitePawn.png"));
             panels = (JPanel) chessBoard.getComponent(i);
             panels.add(pieces);
         }
-        pieces = new JLabel(new ImageIcon("WhiteRook.png"));
+        pieces = new JLabel(new ImageIcon("pieces/WhiteRook.png"));
         panels = (JPanel) chessBoard.getComponent(0);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("WhiteKnight.png"));
+        pieces = new JLabel(new ImageIcon("pieces/WhiteKnight.png"));
         panels = (JPanel) chessBoard.getComponent(1);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("WhiteKnight.png"));
+        pieces = new JLabel(new ImageIcon("pieces/WhiteKnight.png"));
         panels = (JPanel) chessBoard.getComponent(6);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("WhiteBishop.png"));
+        pieces = new JLabel(new ImageIcon("pieces/WhiteBishop.png"));
         panels = (JPanel) chessBoard.getComponent(2);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("WhiteBishop.png"));
+        pieces = new JLabel(new ImageIcon("pieces/WhiteBishop.png"));
         panels = (JPanel) chessBoard.getComponent(5);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("WhiteQueen.png"));
+        pieces = new JLabel(new ImageIcon("pieces/WhiteQueen.png"));
         panels = (JPanel) chessBoard.getComponent(3);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("WhiteKing.png"));
+        pieces = new JLabel(new ImageIcon("pieces/WhiteKing.png"));
         panels = (JPanel) chessBoard.getComponent(4);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("WhiteRook.png"));
+        pieces = new JLabel(new ImageIcon("pieces/WhiteRook.png"));
         panels = (JPanel) chessBoard.getComponent(7);
         panels.add(pieces);
         for (int i = 48; i < 56; i++)
         {
-            pieces = new JLabel(new ImageIcon("BlackPawn.png"));
+            pieces = new JLabel(new ImageIcon("piecesBlackPawn.png"));
             panels = (JPanel) chessBoard.getComponent(i);
             panels.add(pieces);
         }
-        pieces = new JLabel(new ImageIcon("BlackRook.png"));
+        pieces = new JLabel(new ImageIcon("piecesBlackRook.png"));
         panels = (JPanel) chessBoard.getComponent(56);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("BlackKnight.png"));
+        pieces = new JLabel(new ImageIcon("piecesBlackKnight.png"));
         panels = (JPanel) chessBoard.getComponent(57);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("BlackKnight.png"));
+        pieces = new JLabel(new ImageIcon("piecesBlackKnight.png"));
         panels = (JPanel) chessBoard.getComponent(62);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("BlackBishop.png"));
+        pieces = new JLabel(new ImageIcon("piecesBlackBishop.png"));
         panels = (JPanel) chessBoard.getComponent(58);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("BlackBishop.png"));
+        pieces = new JLabel(new ImageIcon("piecesBlackBishop.png"));
         panels = (JPanel) chessBoard.getComponent(61);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("BlackQueen.png"));
+        pieces = new JLabel(new ImageIcon("piecesBlackQueen.png"));
         panels = (JPanel) chessBoard.getComponent(59);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("BlackKing.png"));
+        pieces = new JLabel(new ImageIcon("piecesBlackKing.png"));
         panels = (JPanel) chessBoard.getComponent(60);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("BlackRook.png"));
+        pieces = new JLabel(new ImageIcon("piecesBlackRook.png"));
         panels = (JPanel) chessBoard.getComponent(63);
         panels.add(pieces);
 
