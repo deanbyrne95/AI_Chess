@@ -90,32 +90,31 @@ In this version, the game is up to date with the second objective - allowing pla
 ----------------------------------------------------
 ====================================================
 */
-//Suppress Warnings
-@SuppressWarnings("unchecked")
-public class Chess extends JFrame implements MouseListener, MouseMotionListener
+
+class Chess extends JFrame implements MouseListener, MouseMotionListener
 {
     //Local Variables
-    JLayeredPane layeredPane;
-    JPanel chessBoard;
-    JPanel panels;
-    JLabel chessPiece;
-    JLabel pieces;
+    private JLayeredPane layeredPane;
+    private JPanel chessBoard;
+    private JPanel panels;
+    private JLabel chessPiece;
+    private JLabel pieces;
 
-    int adjustmentX;
-    int adjustmentY;
-    int startX;
-    int startY;
-    int initialX;
-    int initialY;
+    private int adjustmentX;
+    private int adjustmentY;
+    private int startX;
+    private int startY;
+    private int initialX;
+    private int initialY;
 
-    String pieceTaken;
+    //private String pieceTaken;
 
-    Boolean draggingPiece;
-    Boolean whiteTurn;
-    Boolean gameOver;
-    Boolean aiWins;
+    //private Boolean draggingPiece;
+    private Boolean whiteTurn;
+    private Boolean gameOver;
+    private Boolean aiWins;
 
-    AI ai;
+    private AI ai;
 
     /*
     ====================================================
@@ -126,7 +125,7 @@ public class Chess extends JFrame implements MouseListener, MouseMotionListener
     ----------------------------------------------------
     ====================================================
     */
-    public Chess()
+    Chess()
     {
         Dimension boardSize = new Dimension(600, 600);
 
@@ -287,7 +286,7 @@ public class Chess extends JFrame implements MouseListener, MouseMotionListener
         Component c1 = chessBoard.findComponentAt(newX, newY);
         JLabel awaitingPiece = (JLabel) c1;
         String tmp1 = awaitingPiece.getIcon().toString();
-        if (((tmp1.contains("White"))))
+        if (tmp1.contains("White"))
         {
             if (tmp1.contains("King"))
             {
@@ -320,7 +319,7 @@ public class Chess extends JFrame implements MouseListener, MouseMotionListener
         Component c1 = chessBoard.findComponentAt(newX, newY);
         JLabel awaitingPiece = (JLabel) c1;
         String tmp1 = awaitingPiece.getIcon().toString();
-        if (((tmp1.contains("Black"))))
+        if (tmp1.contains("Black"))
         {
             if (tmp1.contains("King"))
             {
@@ -393,16 +392,14 @@ public class Chess extends JFrame implements MouseListener, MouseMotionListener
     */
     private Boolean checkKingNear(int x, int y)
     {
-        if (
-                ((piecePresent(x, y + 75)) && getSquarePieceName(x, y + 75).contains("King")) ||
-                        ((piecePresent(x, y - 75)) && getSquarePieceName(x, y - 75).contains("King")) ||
-                        ((piecePresent(x + 75, y)) && getSquarePieceName(x + 75, y).contains("King")) ||
-                        ((piecePresent(x - 75, y)) && getSquarePieceName(x - 75, y).contains("King")) ||
-                        ((piecePresent(x + 75, y + 75)) && getSquarePieceName(x + 75, y + 75).contains("King")) ||
-                        ((piecePresent(x + 75, y - 75)) && getSquarePieceName(x + 75, y - 75).contains("King")) ||
-                        ((piecePresent(x - 75, y + 75)) && getSquarePieceName(x - 75, y + 75).contains("King")) ||
-                        ((piecePresent(x - 75, y - 75)) && getSquarePieceName(x - 75, y - 75).contains("King"))
-                )
+        if (((piecePresent(x, y + 75)) && getSquarePieceName(x, y + 75).contains("King")) ||
+                ((piecePresent(x, y - 75)) && getSquarePieceName(x, y - 75).contains("King")) ||
+                ((piecePresent(x + 75, y)) && getSquarePieceName(x + 75, y).contains("King")) ||
+                ((piecePresent(x - 75, y)) && getSquarePieceName(x - 75, y).contains("King")) ||
+                ((piecePresent(x + 75, y + 75)) && getSquarePieceName(x + 75, y + 75).contains("King")) ||
+                ((piecePresent(x + 75, y - 75)) && getSquarePieceName(x + 75, y - 75).contains("King")) ||
+                ((piecePresent(x - 75, y + 75)) && getSquarePieceName(x - 75, y + 75).contains("King")) ||
+                ((piecePresent(x - 75, y - 75)) && getSquarePieceName(x - 75, y - 75).contains("King")))
         {
             return true;
         } else
@@ -424,16 +421,14 @@ public class Chess extends JFrame implements MouseListener, MouseMotionListener
     {
         int x = s.getXCoOrdinate();
         int y = s.getYCoOrdinate();
-        if (
-                ((piecePresent(x, y + 75)) && getSquarePieceName(x, y + 75).contains("King")) ||
-                        ((piecePresent(x, y - 75)) && getSquarePieceName(x, y - 75).contains("King")) ||
-                        ((piecePresent(x + 75, y)) && getSquarePieceName(x + 75, y).contains("King")) ||
-                        ((piecePresent(x - 75, y)) && getSquarePieceName(x - 75, y).contains("King")) ||
-                        ((piecePresent(x + 75, y + 75)) && getSquarePieceName(x + 75, y + 75).contains("King")) ||
-                        ((piecePresent(x + 75, y - 75)) && getSquarePieceName(x + 75, y - 75).contains("King")) ||
-                        ((piecePresent(x - 75, y + 75)) && getSquarePieceName(x - 75, y + 75).contains("King")) ||
-                        ((piecePresent(x - 75, y - 75)) && getSquarePieceName(x - 75, y - 75).contains("King"))
-                )
+        if (((piecePresent(x, y + 75)) && getSquarePieceName(x, y + 75).contains("King")) ||
+                ((piecePresent(x, y - 75)) && getSquarePieceName(x, y - 75).contains("King")) ||
+                ((piecePresent(x + 75, y)) && getSquarePieceName(x + 75, y).contains("King")) ||
+                ((piecePresent(x - 75, y)) && getSquarePieceName(x - 75, y).contains("King")) ||
+                ((piecePresent(x + 75, y + 75)) && getSquarePieceName(x + 75, y + 75).contains("King")) ||
+                ((piecePresent(x + 75, y - 75)) && getSquarePieceName(x + 75, y - 75).contains("King")) ||
+                ((piecePresent(x - 75, y + 75)) && getSquarePieceName(x - 75, y + 75).contains("King")) ||
+                ((piecePresent(x - 75, y - 75)) && getSquarePieceName(x - 75, y - 75).contains("King")))
         {
             return true;
         } else
@@ -457,8 +452,7 @@ public class Chess extends JFrame implements MouseListener, MouseMotionListener
         if ((c instanceof JLabel))
         {
             JLabel awaitingPiece = (JLabel) c;
-            String tmp1 = awaitingPiece.getIcon().toString();
-            return tmp1;
+            return awaitingPiece.getIcon().toString();
         } else
         {
             return "";
@@ -474,7 +468,9 @@ public class Chess extends JFrame implements MouseListener, MouseMotionListener
             move = (Move) input.pop();
             start = (Square) move.getStart();
             landing = (Square) move.getLanding();
-            System.out.println("The possible move that was found is : (" + start.getXCoOrdinate() + " , " + start.getYCoOrdinate() + "), landing at (" + landing.getXCoOrdinate() + " , " + landing.getYCoOrdinate() + ")");
+            System.out.println("The possible move that was found is : (" + start.getXCoOrdinate() + " , " +
+                    start.getYCoOrdinate() + "), landing at (" + landing.getXCoOrdinate() + " , " +
+                    landing.getYCoOrdinate() + ")");
         }
     }
 
