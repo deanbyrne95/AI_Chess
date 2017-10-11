@@ -31,6 +31,13 @@ public class Chess extends JFrame implements MouseListener, MouseMotionListener
     int initialX;
     int initialY;
 
+    String pieceTaken;
+
+    Boolean draggingPiece;
+    Boolean whiteTurn;
+    Boolean gameOver;
+    Boolean aiWins;
+
     public Chess()
     {
         Dimension boardSize = new Dimension(600, 600);
@@ -127,6 +134,159 @@ public class Chess extends JFrame implements MouseListener, MouseMotionListener
         pieces = new JLabel(new ImageIcon("Pieces/BlackRook.png"));
         panels = (JPanel) chessBoard.getComponent(63);
         panels.add(pieces);
+    }
+
+    //This method checks if there is a piece present on a particular square.
+    private Boolean piecePresent(int x, int y)
+    {
+        Component c = chessBoard.findComponentAt(x, y);
+        if (c instanceof JPanel)
+        {
+            return false;
+        } else
+        {
+            return true;
+        }
+    }
+
+    //This is a method to check if a piece is a White piece.
+    private Boolean checkBlackOpponent(int newX, int newY)
+    {
+        Boolean opponent;
+        Component c1 = chessBoard.findComponentAt(newX, newY);
+        JLabel awaitingPiece = (JLabel) c1;
+        String tmp1 = awaitingPiece.getIcon().toString();
+        if (((tmp1.contains("White"))))
+        {
+            if (tmp1.contains("King"))
+            {
+                opponent = true;
+                GameOver("Black");
+            } else
+            {
+                opponent = true;
+            }
+        } else
+        {
+            opponent = false;
+        }
+        return opponent;
+    }
+
+    //This is a method to check if a piece is a Black piece.
+    private Boolean checkWhiteOpponent(int newX, int newY)
+    {
+        Boolean opponent;
+        Component c1 = chessBoard.findComponentAt(newX, newY);
+        JLabel awaitingPiece = (JLabel) c1;
+        String tmp1 = awaitingPiece.getIcon().toString();
+        if (((tmp1.contains("Black"))))
+        {
+            if (tmp1.contains("King"))
+            {
+                opponent = true;
+                GameOver("White");
+            } else
+            {
+                opponent = true;
+            }
+        } else
+        {
+            opponent = false;
+        }
+        return opponent;
+    }
+
+    private void SwitchTurn(Boolean bool)
+    {
+        if (whiteTurn)
+        {
+            whiteTurn = !bool;
+            System.out.println("Black Turn");
+        } else
+        {
+            whiteTurn = bool;
+            System.out.println("White Turn");
+        }
+    }
+
+    private void GameOver(String winColour)
+    {
+        gameOver = true;
+        if (winColour.contains("White"))
+        {
+            JOptionPane.showMessageDialog(null, "White won the game!");
+            System.exit(0);
+        } else
+        {
+            JOptionPane.showMessageDialog(null, "Black won the game!");
+            System.exit(0);
+        }
+    }
+
+    private Boolean checkKingNear(int x, int y)
+    {
+        if (((piecePresent(x, y + 75)) && getSquarePieceName(x, y + 75).contains("King")) ||
+                ((piecePresent(x, y - 75)) && getSquarePieceName(x, y - 75).contains("King")) ||
+                ((piecePresent(x + 75, y)) && getSquarePieceName(x + 75, y).contains("King")) ||
+                ((piecePresent(x - 75, y)) && getSquarePieceName(x - 75, y).contains("King")) ||
+                ((piecePresent(x + 75, y + 75)) && getSquarePieceName(x + 75, y + 75).contains("King")) ||
+                ((piecePresent(x + 75, y - 75)) && getSquarePieceName(x + 75, y - 75).contains("King")) ||
+                ((piecePresent(x - 75, y + 75)) && getSquarePieceName(x - 75, y + 75).contains("King")) ||
+                ((piecePresent(x - 75, y - 75)) && getSquarePieceName(x - 75, y - 75).contains("King")))
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+
+    private Boolean checkKingNear(Square s)
+    {
+        int x = s.getXCoOrdinate();
+        int y = s.getYCoOrdinate();
+        if (((piecePresent(x, y + 75)) && getSquarePieceName(x, y + 75).contains("King")) ||
+                ((piecePresent(x, y - 75)) && getSquarePieceName(x, y - 75).contains("King")) ||
+                ((piecePresent(x + 75, y)) && getSquarePieceName(x + 75, y).contains("King")) ||
+                ((piecePresent(x - 75, y)) && getSquarePieceName(x - 75, y).contains("King")) ||
+                ((piecePresent(x + 75, y + 75)) && getSquarePieceName(x + 75, y + 75).contains("King")) ||
+                ((piecePresent(x + 75, y - 75)) && getSquarePieceName(x + 75, y - 75).contains("King")) ||
+                ((piecePresent(x - 75, y + 75)) && getSquarePieceName(x - 75, y + 75).contains("King")) ||
+                ((piecePresent(x - 75, y - 75)) && getSquarePieceName(x - 75, y - 75).contains("King")))
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+
+    private String getSquarePieceName(int x, int y)
+    {
+        Component c = chessBoard.findComponentAt(x, y);
+        if ((c instanceof JLabel))
+        {
+            JLabel awaitingPiece = (JLabel) c;
+            String tmp1 = awaitingPiece.getIcon().toString();
+            return tmp1;
+        } else
+        {
+            return "";
+        }
+    }
+
+    private void printStack(Stack input){
+        Move move;
+        Square start, landing;
+        while(!input.empty()){
+            move = (Move)input.pop();
+            start = (Square)move.getStart();
+            landing = (Square)move.getLanding();
+            System.out.println("The possible move that was found is : (" + start.getXCoOrdinate() + " , " +
+                    start.getYCoOrdinate() + "), landing at (" + landing.getXCoOrdinate() + " , " +
+                    landing.getYCoOrdinate()+")");
+        }
     }
 
     public void mousePressed(MouseEvent e)
