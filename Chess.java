@@ -276,16 +276,18 @@ public class Chess extends JFrame implements MouseListener, MouseMotionListener
         }
     }
 
-    private void printStack(Stack input){
+    private void printStack(Stack input)
+    {
         Move move;
         Square start, landing;
-        while(!input.empty()){
-            move = (Move)input.pop();
-            start = (Square)move.getStart();
-            landing = (Square)move.getLanding();
+        while (!input.empty())
+        {
+            move = (Move) input.pop();
+            start = (Square) move.getStart();
+            landing = (Square) move.getLanding();
             System.out.println("The possible move that was found is : (" + start.getXCoOrdinate() + " , " +
                     start.getYCoOrdinate() + "), landing at (" + landing.getXCoOrdinate() + " , " +
-                    landing.getYCoOrdinate()+")");
+                    landing.getYCoOrdinate() + ")");
         }
     }
 
@@ -293,11 +295,11 @@ public class Chess extends JFrame implements MouseListener, MouseMotionListener
     private void colourSquares(Stack squares)
     {
         Border greenBorder = BorderFactory.createLineBorder(Color.GREEN, 3);
-        while(!squares.empty())
+        while (!squares.empty())
         {
-            Square s = (Square)squares.pop();
-            int location = s.getXCoOrdinate() + ((s.getYCoOrdinate())*8);
-            JPanel panel = (JPanel)chessBoard.getComponent(location);
+            Square s = (Square) squares.pop();
+            int location = s.getXCoOrdinate() + ((s.getYCoOrdinate()) * 8);
+            JPanel panel = (JPanel) chessBoard.getComponent(location);
             panel.setBorder(greenBorder);
         }
     }
@@ -306,9 +308,9 @@ public class Chess extends JFrame implements MouseListener, MouseMotionListener
     private void resetBorders()
     {
         Border empty = BorderFactory.createEmptyBorder();
-        for(int i = 0; i < 64; i++)
+        for (int i = 0; i < 64; i++)
         {
-            JPanel tmp_panel = (JPanel)chessBoard.getComponent(i);
+            JPanel tmp_panel = (JPanel) chessBoard.getComponent(i);
             tmp_panel.setBorder(empty);
         }
     }
@@ -319,10 +321,10 @@ public class Chess extends JFrame implements MouseListener, MouseMotionListener
         Move temp;
         Square landingSquare;
         Stack squares = new Stack();
-        while(!(square.empty()))
+        while (!(square.empty()))
         {
-            temp = (Move)square.pop();
-            landingSquare = (Square)temp.getLanding();
+            temp = (Move) square.pop();
+            landingSquare = (Square) temp.getLanding();
             squares.push(landingSquare);
         }
         colourSquares(squares);
@@ -358,7 +360,9 @@ public class Chess extends JFrame implements MouseListener, MouseMotionListener
 
     public void mouseDragged(MouseEvent me)
     {
+        if (chessPiece == null) return;
 
+        chessPiece.setLocation(me.getX() + adjustmentX, me.getY() + adjustmentY);
     }
 
     public void mouseReleased(MouseEvent e)
