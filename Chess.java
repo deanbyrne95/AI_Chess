@@ -894,6 +894,7 @@ class Chess extends JFrame implements MouseListener, MouseMotionListener {
             Container parent;
             if (c instanceof JLabel) {
                 parent = c.getParent();
+                this.printCapturedPiece(chessPiece, (ChessPiece) parent.getComponent(0));
                 parent.remove(0);
             } else {
                 parent = (Container) c;
@@ -1698,6 +1699,12 @@ class Chess extends JFrame implements MouseListener, MouseMotionListener {
             }
 //            makeAIMove();
         }*/
+    }
+
+    private void printCapturedPiece(ChessPiece captorPiece, ChessPiece capturedPiece) {
+        System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+        System.out.printf("\t\t%s captured %s%n", captorPiece.getFullName(), capturedPiece.getFullName());
+        System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
     }
 
     private void printMove(Position moveP, Position landP) {
