@@ -19,7 +19,7 @@ public class Pawn extends ChessPiece {
 
     @Override
     protected boolean canMove(JPanel board, int x, int y) {
-        if (!super.withinBounds(x, y) || !super.hasMoved(x, y)) return false;
+        if (super.outOfBounds(x, y) || !super.hasMoved(x, y)) return false;
 
         int startY = this.isWhite() ? START_WHITE : START_BLACK;
         var newP = new Position(x / SQUARE_SIZE, y / SQUARE_SIZE);
@@ -29,15 +29,15 @@ public class Pawn extends ChessPiece {
         return this.canMoveY(this.getInitialY(), newP.y(), maxY) && this.canMoveX(this.getInitialX(), newP.x(), maxX);
     }
 
-    private boolean canMoveY(int from, int to, int numberSquares) {
-        System.out.printf("%d <= %d%n", this.differenceBetween(from, to), numberSquares);
+    @Override
+    protected boolean canMoveX(int from, int to, int numberSquares) {
+        return this.differenceBetween(from, to) == numberSquares;
+    }
+
+    @Override
+    protected boolean canMoveY(int from, int to, int numberSquares) {
         if (this.isWhite())
             return this.differenceBetween(from, to) < 0 && this.differenceBetween(from, to) >= numberSquares;
         return this.differenceBetween(from, to) > 0 && this.differenceBetween(from, to) <= numberSquares;
-    }
-
-    private boolean canMoveX(int from, int to, int numberSquares) {
-        System.out.printf("%d == %d%n", this.differenceBetween(from, to), numberSquares);
-        return this.differenceBetween(from, to) == numberSquares;
     }
 }
