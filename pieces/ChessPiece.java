@@ -29,8 +29,8 @@ public abstract class ChessPiece extends JLabel {
     }
 
     public void setPosition(int x, int y) {
-        this.setInitialX(x);
-        this.setInitialY(y);
+        this.setInitialX(x / SQUARE_SIZE);
+        this.setInitialY(y / SQUARE_SIZE);
     }
 
     public void setInitialX(int initialX) {
@@ -67,9 +67,9 @@ public abstract class ChessPiece extends JLabel {
     public abstract boolean isValidMove(JPanel board, int newX, int newY);
 
     protected boolean canMove(JPanel board, int x, int y) {
+        if (this.outOfBounds(x, y) || !this.hasMoved(x, y)) return false;
         // This code can allow a piece to move anywhere on the board
-        return this.hasMoved(x, y)
-                && (this.isSquareEmpty(board, x, y) || (!isSquareEmpty(board, x, y) && this.isOpposingColour(board, x, y)))
+        return (this.isSquareEmpty(board, x, y) || (!isSquareEmpty(board, x, y) && this.isOpposingColour(board, x, y)))
                 && !this.isBlocked(board, x, y);
     }
 
@@ -79,6 +79,7 @@ public abstract class ChessPiece extends JLabel {
     }
 
     protected boolean isBlocked(JPanel board, int x, int y) {
+
         return false;
     }
 
@@ -94,20 +95,24 @@ public abstract class ChessPiece extends JLabel {
     }
 
     protected boolean hasMoved(int x, int y) {
-        return this.withinBounds(x, y) && (this.notEquals(this.getInitialX(), x) || this.notEquals(this.getInitialY(), y));
+        return (this.notEquals(this.getInitialX(), x) || this.notEquals(this.getInitialY(), y));
     }
 
-    protected boolean withinBounds(int x, int y) {
-        return this.inBounds(x) && this.inBounds(y);
+    protected boolean outOfBounds(int x, int y) {
+        return this.outsideBounds(x) || this.outsideBounds(y);
     }
+
+    protected abstract boolean canMoveX(int from, int to, int numberSquares);
+
+    protected abstract boolean canMoveY(int from, int to, int numberSquares);
 
     protected int differenceBetween(int s, int e) {
         return e - s;
     }
 
-    private boolean inBounds(int n) {
+    private boolean outsideBounds(int n) {
         int s = n / SQUARE_SIZE;
-        return s >= 0 && s <= 7;
+        return s < 0 || s > 7;
     }
 
     private boolean notEquals(int i, int newI) {
