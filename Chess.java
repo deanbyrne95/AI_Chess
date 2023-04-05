@@ -1,4 +1,5 @@
 import pieces.*;
+import records.Position;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -30,22 +31,11 @@ class Chess extends JFrame implements MouseListener, MouseMotionListener {
     private final JPanel chessBoard;
     private JPanel panels;
     private ChessPiece chessPiece;
-
     private int adjustmentX;
     private int adjustmentY;
     private int startX;
     private int startY;
-    private int initialX;
-    private int initialY;
-
-    //private String pieceTaken;
-
-    //private boolean draggingPiece;
     private boolean whiteTurn;
-    private boolean gameOver;
-    //    private boolean aiWins;
-
-    //    private AI ai;
 
 
     Chess() {
@@ -169,7 +159,6 @@ class Chess extends JFrame implements MouseListener, MouseMotionListener {
 
 
     private void gameOver(String winColour) {
-        gameOver = true;
         JOptionPane.showMessageDialog(null, winColour.contains("W_") ? "White won the game!" : "Black won the game!");
         System.exit(0);
     }
@@ -868,11 +857,7 @@ class Chess extends JFrame implements MouseListener, MouseMotionListener {
             Point parentLocation = c.getParent().getLocation();
             adjustmentX = parentLocation.x - e.getX();
             adjustmentY = parentLocation.y - e.getY();
-            initialX = e.getX();
-            initialY = e.getY();
-            startX = (e.getX() / SQUARE_SIZE);
-            startY = (e.getY() / SQUARE_SIZE);
-            chessPiece.setPosition(startX, startY);
+            chessPiece.setPosition(e.getX(), e.getY());
             chessPiece.setLocation(e.getX() + adjustmentX, e.getY() + adjustmentY);
             chessPiece.setSize(chessPiece.getWidth(), chessPiece.getHeight());
             layeredPane.add(chessPiece, JLayeredPane.DRAG_LAYER);
@@ -901,18 +886,11 @@ class Chess extends JFrame implements MouseListener, MouseMotionListener {
         boolean progression = false;
         Component c = chessBoard.findComponentAt(e.getX(), e.getY());
 
-        int landingX = (e.getX() / SQUARE_SIZE);
-        int landingY = (e.getY() / SQUARE_SIZE);
-        int xMovement = (e.getX() / SQUARE_SIZE) - startX;
-        int yMovement = (e.getY() / SQUARE_SIZE) - startY;
-        System.out.println("----------------------------------------------");
-        System.out.printf("Piece:\t\t\t\t\t\t%s%n", chessPiece.getFullName());
-        System.out.printf("Starting coordinates:\t\t(%d, %d)%n", startX, startY);
-        System.out.printf("Movement:\t\t\t\t\t(%d, %d)%n", xMovement, yMovement);
-        System.out.printf("Landing coordinates:\t\t(%d, %d)%n", landingX, landingY);
-        System.out.println("----------------------------------------------");
+        var moveP = new Position(((e.getX() / SQUARE_SIZE) - chessPiece.getInitialX()), ((e.getY() / SQUARE_SIZE) - chessPiece.getInitialY()));
+        var landP = new Position((e.getX() / SQUARE_SIZE), (e.getY() / SQUARE_SIZE));
 
         if (chessPiece.isValidMove(chessBoard, e.getX(), e.getY())) {
+            this.printMove(moveP, landP);
             Container parent;
             if (c instanceof JLabel) {
                 parent = c.getParent();
@@ -920,7 +898,7 @@ class Chess extends JFrame implements MouseListener, MouseMotionListener {
             } else {
                 parent = (Container) c;
             }
-            chessPiece.setLocation(landingX, landingY);
+            chessPiece.setLocation(landP.x(), landP.y());
             chessPiece.setVisible(true);
             parent.add(chessPiece);
             this.switchTurn();
@@ -1720,6 +1698,15 @@ class Chess extends JFrame implements MouseListener, MouseMotionListener {
             }
 //            makeAIMove();
         }*/
+    }
+
+    private void printMove(Position moveP, Position landP) {
+        System.out.println("----------------------------------------------");
+        System.out.printf("Piece:\t\t\t\t\t\t%s%n", chessPiece.getFullName());
+        System.out.printf("Starting coordinates:\t\t[%d, %d]%n", chessPiece.getInitialX(), chessPiece.getInitialY());
+        System.out.printf("Movement:\t\t\t\t\t[%d, %d]%n", moveP.x(), moveP.y());
+        System.out.printf("Landing coordinates:\t\t[%d, %d]%n", landP.x(), landP.y());
+        System.out.println("----------------------------------------------");
     }
 
     //Empty mouse methods
