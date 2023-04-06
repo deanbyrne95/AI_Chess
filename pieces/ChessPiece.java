@@ -67,7 +67,7 @@ public abstract class ChessPiece extends JLabel {
     public abstract boolean isValidMove(JPanel board, int newX, int newY);
 
     protected boolean canMove(JPanel board, int x, int y) {
-        if (this.outOfBounds(x, y) || !this.hasMoved(x, y)) return false;
+        if (this.outOfBounds(x, y) || this.notMoved(x, y)) return false;
         // This code can allow a piece to move anywhere on the board
         return (this.isSquareEmpty(board, x, y) || (!isSquareEmpty(board, x, y) && this.isOpposingColour(board, x, y)))
                 && !this.isBlocked(board, x, y);
@@ -94,8 +94,8 @@ public abstract class ChessPiece extends JLabel {
         return false;
     }
 
-    protected boolean hasMoved(int x, int y) {
-        return (this.notEquals(this.getInitialX(), x) || this.notEquals(this.getInitialY(), y));
+    protected boolean notMoved(int x, int y) {
+        return (!this.notEquals(this.getInitialX(), x) && !this.notEquals(this.getInitialY(), y));
     }
 
     protected boolean outOfBounds(int x, int y) {

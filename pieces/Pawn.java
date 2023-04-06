@@ -19,7 +19,7 @@ public class Pawn extends ChessPiece {
 
     @Override
     protected boolean canMove(JPanel board, int x, int y) {
-        if (super.outOfBounds(x, y) || !super.hasMoved(x, y)) return false;
+        if (super.outOfBounds(x, y) || super.notMoved(x, y)) return false;
 
         int startY = this.isWhite() ? START_WHITE : START_BLACK;
         var newP = new Position(x / SQUARE_SIZE, y / SQUARE_SIZE);
