@@ -85,13 +85,7 @@ public abstract class ChessPiece extends JLabel {
 
     protected boolean isOpposingColour(JPanel board, int x, int y) {
         ChessPiece piece = (ChessPiece) board.findComponentAt(x, y);
-        if (piece.isWhite() != this.isWhite()) {
-            System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
-            System.out.printf("\t\t\tCaptured %s%n", piece.getFullName());
-            System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
-            return true;
-        }
-        return false;
+        return piece.isWhite() != this.isWhite();
     }
 
     protected boolean notMoved(int x, int y) {
