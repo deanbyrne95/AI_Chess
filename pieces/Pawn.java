@@ -31,7 +31,7 @@ public class Pawn extends ChessPiece {
 
     @Override
     protected boolean canMoveX(int from, int to, int numberSquares) {
-        return this.differenceBetween(from, to) == numberSquares;
+        return Math.abs(this.differenceBetween(from, to)) == Math.abs(numberSquares);
     }
 
     @Override
