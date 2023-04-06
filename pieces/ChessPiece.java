@@ -6,11 +6,11 @@ import java.awt.*;
 import static constants.Constants.SQUARE_SIZE;
 
 public abstract class ChessPiece extends JLabel {
+    private int initialX;
+    private int initialY;
     private final String name;
     private final boolean white;
     private final Icon icon;
-    private int initialX;
-    private int initialY;
 
     public ChessPiece(int x, int y, boolean white) {
         this.name = this.getClass().getSimpleName();
@@ -69,7 +69,8 @@ public abstract class ChessPiece extends JLabel {
     protected boolean canMove(JPanel board, int x, int y) {
         if (this.outOfBounds(x, y) || !this.hasMoved(x, y)) return false;
         // This code can allow a piece to move anywhere on the board
-        return (this.isSquareEmpty(board, x, y) || (!isSquareEmpty(board, x, y) && this.isOpposingColour(board, x, y)));
+        return (this.isSquareEmpty(board, x, y) || (!isSquareEmpty(board, x, y) && this.isOpposingColour(board, x, y)))
+                && !this.isBlocked(board, x, y);
     }
 
     protected boolean isSquareEmpty(JPanel board, int x, int y) {
@@ -78,35 +79,19 @@ public abstract class ChessPiece extends JLabel {
     }
 
     protected boolean isBlocked(JPanel board, int x, int y) {
-        var valid = false;
-        if (this.getClass().equals(Rook.class)) {
-            valid = this.checkVertical(board, y) && this.checkHorizontal(board, x);
-        }
 
-        return valid;
-    }
-
-    protected boolean checkVertical(JPanel board, int y) {
-        for (int tempY = this.getInitialY() + (this.getInitialY() < y ? 1 : -1); tempY < y || tempY > y; tempY += (this.getInitialY() < y ? 1 : -1)) {
-            if (!isSquareEmpty(board, (this.getInitialX() * SQUARE_SIZE), (tempY * SQUARE_SIZE))) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    protected boolean checkHorizontal(JPanel board, int x) {
-        for (int tempX = this.getInitialX() + (this.getInitialX() < x ? 1 : -1); tempX < x || tempX > x; tempX += (this.getInitialX() < x ? 1 : -1)) {
-            if (!isSquareEmpty(board, (tempX * SQUARE_SIZE), (this.getInitialY() * SQUARE_SIZE))) {
-                return true;
-            }
-        }
         return false;
     }
 
     protected boolean isOpposingColour(JPanel board, int x, int y) {
         ChessPiece piece = (ChessPiece) board.findComponentAt(x, y);
-        return piece.isWhite() != this.isWhite();
+        if (piece.isWhite() != this.isWhite()) {
+            System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+            System.out.printf("\t\t\tCaptured %s%n", piece.getFullName());
+            System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+            return true;
+        }
+        return false;
     }
 
     protected boolean hasMoved(int x, int y) {
