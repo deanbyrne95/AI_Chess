@@ -22,7 +22,7 @@ public class Pawn extends ChessPiece {
         if (super.outOfBounds(x, y) || super.notMoved(x, y)) return false;
 
         int startY = this.isWhite() ? START_WHITE : START_BLACK;
-        var newP = new Position(x / SQUARE_SIZE, y / SQUARE_SIZE);
+        var newP = new Position((x / SQUARE_SIZE), (y / SQUARE_SIZE));
         int maxX = super.isSquareEmpty(board, x, y) ? 0 : super.isOpposingColour(board, x, y) ? (this.isWhite() ? -1 : 1) : 0;
         int maxY = this.getInitialY() == startY ? (this.isWhite() ? -2 : 2) : (this.isWhite() ? -1 : 1);
 
