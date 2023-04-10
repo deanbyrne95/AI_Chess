@@ -6,11 +6,11 @@ import java.awt.*;
 import static constants.Constants.SQUARE_SIZE;
 
 public abstract class ChessPiece extends JLabel {
-    private int initialX;
-    private int initialY;
     private final String name;
     private final boolean white;
     private final Icon icon;
+    private int initialX;
+    private int initialY;
 
     public ChessPiece(int x, int y, boolean white) {
         this.name = this.getClass().getSimpleName();
@@ -89,7 +89,7 @@ public abstract class ChessPiece extends JLabel {
     }
 
     protected boolean notMoved(int x, int y) {
-        return (!this.notEquals(this.getInitialX(), x) && !this.notEquals(this.getInitialY(), y));
+        return (this.notEquals(this.getInitialX(), x) && this.notEquals(this.getInitialY(), y));
     }
 
     protected boolean outOfBounds(int x, int y) {
@@ -102,6 +102,24 @@ public abstract class ChessPiece extends JLabel {
 
     protected int differenceBetween(int s, int e) {
         return e - s;
+    }
+
+    protected boolean checkVertical(JPanel board, int y) {
+        for (int tempY = this.getInitialY() + (this.getInitialY() < y ? 1 : -1); tempY < y || tempY > y; tempY += (this.getInitialY() < y ? 1 : -1)) {
+            if (!isSquareEmpty(board, (this.getInitialX() * SQUARE_SIZE), (tempY * SQUARE_SIZE))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected boolean checkHorizontal(JPanel board, int x) {
+        for (int tempX = this.getInitialX() + (this.getInitialX() < x ? 1 : -1); tempX < x || tempX > x; tempX += (this.getInitialX() < x ? 1 : -1)) {
+            if (!isSquareEmpty(board, (tempX * SQUARE_SIZE), (this.getInitialY() * SQUARE_SIZE))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean outsideBounds(int n) {
