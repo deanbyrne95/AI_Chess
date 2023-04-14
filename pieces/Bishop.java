@@ -10,7 +10,13 @@ public class Bishop extends ChessPiece {
 
     @Override
     public boolean isValidMove(JPanel board, int newX, int newY) {
-        return super.canMove(board, newX, newY);
+        return this.canMove(board, newX, newY);
+    }
+
+    @Override
+    protected boolean canMove(JPanel board, int x, int y) {
+        if (Math.abs(x) != Math.abs(y)) return false;
+        return super.isBlocked(board, x, y);
     }
 
     @Override
