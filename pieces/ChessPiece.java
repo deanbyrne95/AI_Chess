@@ -79,7 +79,6 @@ public abstract class ChessPiece extends JLabel {
     }
 
     protected boolean isBlocked(JPanel board, int x, int y) {
-
         return false;
     }
 
@@ -105,21 +104,33 @@ public abstract class ChessPiece extends JLabel {
     }
 
     protected boolean checkVertical(JPanel board, int y) {
-        for (int tempY = this.getInitialY() + (this.getInitialY() < y ? 1 : -1); tempY < y || tempY > y; tempY += (this.getInitialY() < y ? 1 : -1)) {
-            if (!isSquareEmpty(board, (this.getInitialX() * SQUARE_SIZE), (tempY * SQUARE_SIZE))) {
-                return true;
+        for (int tempY = this.getInitialY() + (this.getInitialY() < y ? 1 : -1); (this.getInitialY() > y) ? tempY >= y : tempY <= y; tempY += (this.getInitialY() < y ? 1 : -1)) {
+            System.out.printf("Checking if square at [X: %d, Y: %d] is empty%n", this.getInitialX(), tempY);
+            if (tempY != y && !isSquareEmpty(board, (this.getInitialX() * SQUARE_SIZE), (tempY * SQUARE_SIZE))) {
+                // We need to check if there's a piece of an opposing colour only if it is the landing square
+                return false;
+            } else {
+                if (!isSquareEmpty(board, (this.getInitialX() * SQUARE_SIZE), (tempY * SQUARE_SIZE)) && isOpposingColour(board, (this.getInitialX() * SQUARE_SIZE), (tempY * SQUARE_SIZE))) {
+                    return true;
+                }
             }
         }
-        return false;
+        return true;
     }
 
     protected boolean checkHorizontal(JPanel board, int x) {
-        for (int tempX = this.getInitialX() + (this.getInitialX() < x ? 1 : -1); tempX < x || tempX > x; tempX += (this.getInitialX() < x ? 1 : -1)) {
-            if (!isSquareEmpty(board, (tempX * SQUARE_SIZE), (this.getInitialY() * SQUARE_SIZE))) {
-                return true;
+        for (int tempX = this.getInitialX() + (this.getInitialX() < x ? 1 : -1); (this.getInitialX() > x) ? tempX >= x : tempX <= x; tempX += (this.getInitialX() < x ? 1 : -1)) {
+            System.out.printf("Checking if square at [X: %d, Y: %d] is empty%n", tempX, this.getInitialY());
+            if (tempX != x && !isSquareEmpty(board, (tempX * SQUARE_SIZE), (this.getInitialY() * SQUARE_SIZE))) {
+                // We need to check if there's a piece of an opposing colour only if it is the landing square
+                return false;
+            } else {
+                if (!isSquareEmpty(board, (tempX * SQUARE_SIZE), (this.getInitialY() * SQUARE_SIZE)) && isOpposingColour(board, (tempX * SQUARE_SIZE), (this.getInitialY() * SQUARE_SIZE))) {
+                    return true;
+                }
             }
         }
-        return false;
+        return true;
     }
 
     private boolean outsideBounds(int n) {
